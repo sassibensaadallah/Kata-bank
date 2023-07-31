@@ -1,5 +1,6 @@
 package com.racemus.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +21,29 @@ public class Account {
 	}
 	
 	public void withdrawal(float amount){
-		//Not implemented yet
+		if(balance>=amount) {
+			balance-=amount;
+			Operation operation= new Operation();
+			operation.setAmount(amount);
+			operation.setBalance(balance);
+			operation.setDate(LocalDateTime.now());
+			operation.setOperationType(OperationType.Withdrawal);
+			operations.add(operation);
+		} else  {
+			System.out.println("insufficient balance");
+		}
 	}
-	
 	public void deposit(float amount) {
-		//Not implemented yet
+		balance+=amount;
+		Operation operation= new Operation();
+		operation.setAmount(amount);
+		operation.setBalance(balance);
+		operation.setDate(LocalDateTime.now());
+		operation.setOperationType(OperationType.Deposit);
+		operations.add(operation);
 	}
 	
 	public void history() {
-		//Not implemented yet
-	}	
+		this.operations.stream().forEach(System.out::println);
+		}
 }
